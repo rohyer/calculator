@@ -5,6 +5,20 @@ let beforeMathOperation = null;
 let inputText = document.querySelector('input[type="text"]');
 
 /**
+ * Limpa as variáveis e atribui vazio para o input text
+ */
+const btnClear = document.querySelector('.btn-clear');
+btnClear.addEventListener('click', function() {
+  inputText.value = '';
+  firstValue = 0;
+  firstFinalValue = 0;
+  secondValue = 0;
+  secondFinalValue = 0;
+  result = null;
+  beforeMathOperation = null;
+});
+
+/**
  * Recebe o clique do primeiro e segundo valor da conta
  * Após o primeiro ser recebido só será recebindo o segundo valor porque o primeiro valor será ocupado pelo resultado
  */
