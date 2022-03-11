@@ -25,7 +25,7 @@ btnNumbers.forEach((value, key) => {
  * Recebe a operação matemática
  * O resultado só será apresentado após o recebimento da segunda operação
  */
-const mathOperation = document.querySelectorAll('.mathematical-operation');
+const mathOperation = document.querySelectorAll('.math-operation');
 mathOperation.forEach((value, key) => {
   mathOperation[key].addEventListener('click', function() {
     if (!secondValue) {
