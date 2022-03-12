@@ -43,26 +43,32 @@ const mathOperation = document.querySelectorAll('.math-operation');
 mathOperation.forEach((value, key) => {
   mathOperation[key].addEventListener('click', function() {
     if (!secondValue) {
-      if (firstValue) firstFinalValue = Number(firstValue);
-      beforeMathOperation = value.value;
-      inputText.value += ` ${beforeMathOperation} `;
+      if (firstValue && !beforeMathOperation) {
+        firstFinalValue = Number(firstValue);
+        beforeMathOperation = value.value;
+        inputText.value += ` ${beforeMathOperation} `;
+
+      } else if (firstValue && beforeMathOperation) {
+        beforeMathOperation = value.value;
+        inputText.value = inputText.value.slice(0, inputText.value.indexOf(' '));
+        inputText.value += ` ${beforeMathOperation} `;
+
+      }
     } else {
-      if (secondValue) secondFinalValue = Number(secondValue);
+      if (secondValue) {
+        secondFinalValue = Number(secondValue);
 
-      if (beforeMathOperation === '+') result = firstFinalValue + secondFinalValue;
-      else if (beforeMathOperation === '-') result = firstFinalValue - secondFinalValue;
-      else if (beforeMathOperation === 'X') result = firstFinalValue * secondFinalValue;
-      else if (beforeMathOperation === '/') result = firstFinalValue / secondFinalValue;
+        if (beforeMathOperation === '+') result = firstFinalValue + secondFinalValue;
+        else if (beforeMathOperation === '-') result = firstFinalValue - secondFinalValue;
+        else if (beforeMathOperation === 'X') result = firstFinalValue * secondFinalValue;
+        else if (beforeMathOperation === '/') result = firstFinalValue / secondFinalValue;
 
-      beforeMathOperation = value.value;
-      inputText.value = `${result} ${beforeMathOperation} `;
+        beforeMathOperation = value.value;
+        inputText.value = `${result} ${beforeMathOperation} `;
 
-      console.log(`Primeiro valor: ${firstFinalValue}`);
-      console.log(`Segundo valor: ${secondFinalValue}`);
-      console.log(`Resultado: ${result}`)
-
-      secondValue = 0;
-      firstFinalValue = result;
+        secondValue = 0;
+        firstFinalValue = result;
+      }
     }
   });
 });
