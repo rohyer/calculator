@@ -43,6 +43,7 @@ const mathOperation = document.querySelectorAll('.math-operation');
 mathOperation.forEach((value, key) => {
   mathOperation[key].addEventListener('click', function() {
     if (!secondValue) {
+      console.log('IF');
       if (firstValue && !beforeMathOperation) {
         firstFinalValue = Number(firstValue);
         beforeMathOperation = value.value;
@@ -55,6 +56,7 @@ mathOperation.forEach((value, key) => {
 
       }
     } else {
+      console.log('ELSE');
       if (secondValue) {
         secondFinalValue = Number(secondValue);
 
@@ -71,4 +73,25 @@ mathOperation.forEach((value, key) => {
       }
     }
   });
+});
+
+
+const equalMathOperation = document.querySelector('.equal-math-operation');
+equalMathOperation.addEventListener('click', function() {
+  if (firstValue && secondValue && beforeMathOperation) {
+    secondFinalValue = Number(secondValue);
+
+    if (beforeMathOperation === '+') result = firstFinalValue + secondFinalValue;
+    else if (beforeMathOperation === '-') result = firstFinalValue - secondFinalValue;
+    else if (beforeMathOperation === 'X') result = firstFinalValue * secondFinalValue;
+    else if (beforeMathOperation === '/') result = firstFinalValue / secondFinalValue;
+
+    inputText.value = result;
+    firstValue = result;
+    secondValue = 0;
+    beforeMathOperation = null;
+
+    console.log(firstValue);
+    console.log(secondValue);
+  }
 });
