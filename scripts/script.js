@@ -8,11 +8,15 @@ let counterPressed = 0
 const mathOperation = document.querySelectorAll('.math-operation');
 let lastValue = 0;
 
-/**
- * Limpa as variáveis e atribui vazio para o input text
- */
+
+const equalMathOperation = document.querySelector('.equal-math-operation');
 const btnClear = document.querySelector('.btn-clear');
-btnClear.addEventListener('click', function() {
+const btnNumbers = document.querySelectorAll('.btn-numbers');
+
+/**
+ * Limpa inputs e variáveis
+ */
+const cleanAll = () => {
   inputText.value = '';
   firstValue = 0;
   firstFinalValue = 0;
@@ -20,24 +24,12 @@ btnClear.addEventListener('click', function() {
   secondFinalValue = 0;
   result = null;
   beforeMathOperation = null;
-});
+}
 
 /**
- * Recebe o clique do primeiro e segundo valor da conta
- * Após o primeiro ser recebido só será recebindo o segundo valor porque o primeiro valor será ocupado pelo resultado
+ * Quando a tecla é pressionada a função verifica se a tecla pressionada faz parte
+ * da calculadores e então insere o valor/operação no input
  */
-const btnNumbers = document.querySelectorAll('.btn-numbers');
-btnNumbers.forEach((value, key) => {
-  btnNumbers[key].addEventListener('click', function() {
-    if (beforeMathOperation === null) {
-      inputText.value += btnNumbers[key].value;
-    } else {
-      inputText.value += btnNumbers[key].value;
-    }
-  });
-});
-
-
 const handleClick = event => {
   const acceptableValues = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '+', '-', '*', '/', '='];
   for (let i = 0; i < acceptableValues.length; i++) {
@@ -48,9 +40,9 @@ const handleClick = event => {
   }
 }
 
-document.addEventListener('keypress', handleClick);
-
-
+/**
+ * Faz o calculo de acordo com o que as variáveis recebem de valor
+ */
 const calculate = (event) => {
   lastValue = inputText.value[inputText.value.length - 1];
 
@@ -104,105 +96,14 @@ const calculate = (event) => {
           // counterPressed = 0;
         }
       }
-
     }
-    
-
-    // if (!counterPressed) {
-    //   firstValue = Number(inputText.value);
-
-    //   if (firstValue && !beforeMathOperation) {
-    //     console.log('IF');
-    //     beforeMathOperation = event.key || event.target.value;
-        
-    //     inputText.value += beforeMathOperation;
-
-    //     console.log('Tamanho: ' + inputText.value[inputText.value.length - 1]);
-    //   }
-    // } else {
-    //   if (firstValue && beforeMathOperation) {
-    //     console.log('ELSE');
-    //     beforeMathOperation = event.key ? event.key : event.target.value;
-        
-    //     inputText.value[inputText.value.length - 1] = 10;
-    //     console.log(inputText.value);
-    //   } else {
-    //     secondValue = Number(inputText.value.slice(inputText.value.indexOf(beforeMathOperation)));
-        
-    //     if (beforeMathOperation === '+') result = firstValue + secondValue;
-    //     else if (beforeMathOperation === '-') result = firstValue - secondValue;
-    //     else if (beforeMathOperation === '*') result = firstValue * secondValue;
-    //     else if (beforeMathOperation === '/') result = firstValue / secondValue;
-        
-    //     beforeMathOperation = event.key ? event.key : event.target.value;
-        
-    //     inputText.value = `${result}`;
-    //     if (!event.key) inputText.value += event.target.value;
-    //     firstValue = result;
-    //     secondValue = 0;
-    //     counterPressed = 0;
-    //   }
-    // }
-    // counterPressed++;
   }
 }
 
-document.addEventListener('keypress', calculate);
-
-mathOperation.forEach((value, key) => {
-  mathOperation[key].addEventListener('click', calculate);
-});
-
-inputText.addEventListener('keypress', function(event) {
-  event.preventDefault();
-  return false;
-})
-
-
-
 /**
- * Recebe a operação matemática
- * O resultado só será apresentado após o recebimento da segunda operação
+ * Faz a conta usando os valores das variaveis firstValue, SecondValue e beforeMathOperation
  */
-// const mathOperation = document.querySelectorAll('.math-operation');
-// mathOperation.forEach((value, key) => {
-//   mathOperation[key].addEventListener('click', function() {
-//     if (!secondValue) {
-//       console.log('IF');
-//       if (firstValue && !beforeMathOperation) {
-//         firstFinalValue = Number(firstValue);
-//         beforeMathOperation = value.value;
-//         inputText.value += ` ${beforeMathOperation} `;
-
-//       } else if (firstValue && beforeMathOperation) {
-//         beforeMathOperation = value.value;
-//         inputText.value = inputText.value.slice(0, inputText.value.indexOf(' '));
-//         inputText.value += ` ${beforeMathOperation} `;
-
-//       }
-//     } else {
-//       console.log('ELSE');
-//       if (secondValue) {
-//         secondFinalValue = Number(secondValue);
-
-//         if (beforeMathOperation === '+') result = firstFinalValue + secondFinalValue;
-//         else if (beforeMathOperation === '-') result = firstFinalValue - secondFinalValue;
-//         else if (beforeMathOperation === 'X') result = firstFinalValue * secondFinalValue;
-//         else if (beforeMathOperation === '/') result = firstFinalValue / secondFinalValue;
-
-//         beforeMathOperation = value.value;
-//         inputText.value = `${result} ${beforeMathOperation} `;
-
-//         secondValue = 0;
-//         firstFinalValue = result;
-//       }
-//     }
-//   });
-// });
-
-
-const equalMathOperation = document.querySelector('.equal-math-operation');
-equalMathOperation.addEventListener('click', function() {
+const getResult = () => {
   secondValue = Number(inputText.value.slice(inputText.value.lastIndexOf(beforeMathOperation) + 1));
 
   if (firstValue && secondValue && beforeMathOperation) {
@@ -216,4 +117,44 @@ equalMathOperation.addEventListener('click', function() {
     secondValue = 0;
     beforeMathOperation = null;
   }
+}
+
+/**
+ * Recebe o clique do primeiro e segundo valor da conta
+ * Após o primeiro ser recebido só será recebindo o segundo valor porque o primeiro valor será ocupado pelo resultado
+ */
+const setValuesToInput = (btnNumbers) => {
+  if (beforeMathOperation === null) {
+    inputText.value += btnNumbers.value;
+  } else {
+    inputText.value += btnNumbers.value;
+  }
+}
+
+/**
+ * Impede com que o pressionamento da tecla insira o valor no input
+ */
+ const disableKeyPress = event => {
+  event.preventDefault();
+  return false;
+}
+
+btnClear.addEventListener('click', cleanAll);
+
+
+equalMathOperation.addEventListener('click', getResult);
+
+document.addEventListener('keypress', handleClick);
+
+inputText.addEventListener('keypress', disableKeyPress);
+
+btnNumbers.forEach((value, key) => {
+  btnNumbers[key].addEventListener('click', function() {setValuesToInput(btnNumbers[key])});
 });
+
+mathOperation.forEach((value, key) => {
+  mathOperation[key].addEventListener('click', calculate);
+});
+
+
+// document.addEventListener('keypress', calculate);
