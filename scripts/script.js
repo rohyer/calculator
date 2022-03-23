@@ -9,6 +9,7 @@ const inputButtons = document.querySelectorAll('input[type="button"]');
 const mathOperation = document.querySelectorAll('.math-operation');
 const equalMathOperation = document.querySelector('.equal-math-operation');
 const btnClear = document.querySelector('.btn-clear');
+const btnCancelEntry = document.querySelector('.btn-cancel-entry');
 const btnNumbers = document.querySelectorAll('.btn-numbers');
 
 /**
@@ -20,6 +21,7 @@ const cleanAll = () => {
   secondValue = 0;
   result = null;
   beforeMathOperation = null;
+  counterPressed = 0;
 }
 
 /**
@@ -49,6 +51,7 @@ const calculate = (event) => {
 
     if (inputText.value === '') {
       return false;
+      
     } else {
       if (!counterPressed) {
         if (!firstValue && !beforeMathOperation) {
@@ -57,6 +60,11 @@ const calculate = (event) => {
           inputText.value += beforeMathOperation;
           
         } else if (firstValue && beforeMathOperation) {
+          beforeMathOperation = event.target.value;
+          inputText.value = firstValue + beforeMathOperation;
+          
+        } else if (firstValue && !beforeMathOperation) {
+          firstValue = Number(inputText.value);
           beforeMathOperation = event.target.value;
           inputText.value = firstValue + beforeMathOperation;
         }
@@ -103,6 +111,7 @@ const getResult = () => {
     firstValue = result;
     secondValue = 0;
     beforeMathOperation = null;
+    counterPressed = 0;
   }
 }
 
@@ -121,10 +130,26 @@ const setValuesToInput = (btnNumbers) => {
 /**
  * Impede com que o pressionamento da tecla insira o valor no input
  */
- const disableKeyPress = event => {
+const disableKeyPress = event => {
   event.preventDefault();
   return false;
 }
+
+const cancelEntry = event => {
+  if (beforeMathOperation === null) {
+    inputText.value = '';
+    firstValue = 0;
+  } else {
+    secondValue = 0;
+    inputText.value = firstValue + beforeMathOperation;
+  }
+
+  console.log(firstValue);
+  console.log(secondValue);
+  console.log(beforeMathOperation);
+}
+
+inputText.addEventListener('keypress', disableKeyPress);
 
 btnClear.addEventListener('click', cleanAll);
 
@@ -132,7 +157,7 @@ equalMathOperation.addEventListener('click', getResult);
 
 document.addEventListener('keypress', handleClick);
 
-inputText.addEventListener('keypress', disableKeyPress);
+btnCancelEntry.addEventListener('click', cancelEntry)
 
 btnNumbers.forEach((value, key) => {
   btnNumbers[key].addEventListener('click', function() {setValuesToInput(btnNumbers[key])});
@@ -141,6 +166,5 @@ btnNumbers.forEach((value, key) => {
 mathOperation.forEach((value, key) => {
   mathOperation[key].addEventListener('click', calculate);
 });
-
 
 // document.addEventListener('keypress', calculate);
