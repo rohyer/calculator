@@ -44,7 +44,7 @@ input[type="text"]:focus {
   background-color: rgba(255, 255, 255, 0.75);
 }
 
-input[type="button"]:not(.btn-clear-numbers, .btn-clear) {
+input[type="button"]:not(.btn-cancel-entry, .btn-clear) {
   width: 25%;
   height: 60px;
   background-color: #FFFFFF;
@@ -66,11 +66,11 @@ input[type="button"]:active {
   margin: 3px 3px 0px 0px;
 }
 
-.calculator__main-row input[type="button"]:not(.btn-clear-numbers, .btn-clear) {
+.calculator__main-row input[type="button"]:not(.btn-cancel-entry, .btn-clear) {
   margin: 3px 3px 0px 3px;
 }
 
-.btn-clear, .btn-clear-numbers {
+.btn-clear, .btn-cancel-entry {
   position: absolute;
   bottom: 10px;
   width: 30px;
@@ -85,6 +85,6 @@ input[type="button"]:active {
   right: 10px;
 }
 
-.btn-clear-numbers {
+.btn-cancel-entry {
   right: 40px;
 }
