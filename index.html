@@ -11,8 +11,12 @@
 
   <div class="calculator">
     <div class="calculator__main-row">
-      <input type="text" name="result">
+      <input type="text" name="result" onblur="this.focus()" autofocus>
+      <input class="btn-clear-numbers" type="button" value="CE">
       <input class="btn-clear" type="button" value="C">
+    </div>
+    <div class="calculator__alt-row">
+      
     </div>
     <div class="calculator__alt-row">
       <input class="btn-numbers" type="button" value="1">
@@ -30,7 +34,7 @@
       <input class="btn-numbers" type="button" value="7">
       <input class="btn-numbers" type="button" value="8">
       <input class="btn-numbers" type="button" value="9">
-      <input class="math-operation" type="button" value="X">
+      <input class="math-operation" type="button" value="*">
     </div>
     <div class="calculator__alt-row">
       <input class="math-operation" type="button" value="/">
