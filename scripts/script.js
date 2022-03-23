@@ -1,14 +1,12 @@
-let firstValue = 0, firstFinalValue = 0;
-let secondValue = 0, secondFinalValue = 0;
+let firstValue = 0;
+let secondValue = 0;
 let result = null;
 let beforeMathOperation = null;
+let counterPressed = 0
+let lastValue = 0;
 let inputText = document.querySelector('input[type="text"]');
 const inputButtons = document.querySelectorAll('input[type="button"]');
-let counterPressed = 0
 const mathOperation = document.querySelectorAll('.math-operation');
-let lastValue = 0;
-
-
 const equalMathOperation = document.querySelector('.equal-math-operation');
 const btnClear = document.querySelector('.btn-clear');
 const btnNumbers = document.querySelectorAll('.btn-numbers');
@@ -19,9 +17,7 @@ const btnNumbers = document.querySelectorAll('.btn-numbers');
 const cleanAll = () => {
   inputText.value = '';
   firstValue = 0;
-  firstFinalValue = 0;
   secondValue = 0;
-  secondFinalValue = 0;
   result = null;
   beforeMathOperation = null;
 }
@@ -56,31 +52,23 @@ const calculate = (event) => {
     } else {
       if (!counterPressed) {
         if (!firstValue && !beforeMathOperation) {
-          console.log(1);
           firstValue = Number(inputText.value);
           beforeMathOperation = event.target.value;
           inputText.value += beforeMathOperation;
           
         } else if (firstValue && beforeMathOperation) {
-          console.log(2);
           beforeMathOperation = event.target.value;
           inputText.value = firstValue + beforeMathOperation;
         }
 
         counterPressed++;
-        // console.log(lastValue);
       } else {
         if (lastValue === '+' || lastValue === '-' || lastValue === '*' || lastValue === '/') {
-          console.log(3);
           lastValue = inputText.value[inputText.value.length - 1]
           beforeMathOperation = event.target.value;
           inputText.value = firstValue + beforeMathOperation;
-          console.log("aquiiiiii" + lastValue);
         } else {
-          console.log(4);
           secondValue = Number(inputText.value.slice(inputText.value.lastIndexOf(beforeMathOperation) + 1));
-          console.log(typeof firstValue + ' ' + firstValue);
-          console.log(typeof secondValue + ' ' + secondValue);
           
           if (beforeMathOperation === '+') result = firstValue + secondValue;
           else if (beforeMathOperation === '-') result = firstValue - secondValue;
@@ -93,7 +81,6 @@ const calculate = (event) => {
           inputText.value += event.target.value;
           firstValue = result;
           secondValue = 0;
-          // counterPressed = 0;
         }
       }
     }
@@ -140,7 +127,6 @@ const setValuesToInput = (btnNumbers) => {
 }
 
 btnClear.addEventListener('click', cleanAll);
-
 
 equalMathOperation.addEventListener('click', getResult);
 
