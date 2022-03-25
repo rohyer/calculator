@@ -11,6 +11,7 @@ const equalMathOperation = document.querySelector('.equal-math-operation');
 const btnClear = document.querySelector('.btn-clear');
 const btnCancelEntry = document.querySelector('.btn-cancel-entry');
 const btnNumbers = document.querySelectorAll('.btn-numbers');
+const btnDot = document.querySelector('.btn-dot');
 
 /**
  * Limpa inputs e variáveis
@@ -29,7 +30,7 @@ const cleanAll = () => {
  * da calculadores e então insere o valor/operação no input
  */
 const handleClick = event => {
-  const acceptableValues = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '+', '-', '*', '/', '='];
+  const acceptableValues = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '+', '-', '*', '/', '='];
   for (let i = 0; i < acceptableValues.length; i++) {
     if (event.key === acceptableValues[i]) {
       console.log("OK")
@@ -54,8 +55,12 @@ const calculate = (event) => {
       
     } else {
       if (!counterPressed) {
+        const isFirstValueADecimal = inputText.value.includes(",");
+        isFirstValueADecimal ? firstValue = inputText.value.replace(",", ".")
+                            : firstValue = inputText.value;
+
         if (!firstValue && !beforeMathOperation) {
-          firstValue = Number(inputText.value);
+          // firstValue = Number(firstValue);
           beforeMathOperation = event.target.value;
           inputText.value += beforeMathOperation;
           
@@ -64,7 +69,7 @@ const calculate = (event) => {
           inputText.value = firstValue + beforeMathOperation;
           
         } else if (firstValue && !beforeMathOperation) {
-          firstValue = Number(inputText.value);
+          // firstValue = Number(firstValue);
           beforeMathOperation = event.target.value;
           inputText.value = firstValue + beforeMathOperation;
         }
@@ -76,16 +81,23 @@ const calculate = (event) => {
           beforeMathOperation = event.target.value;
           inputText.value = firstValue + beforeMathOperation;
         } else {
-          secondValue = Number(inputText.value.slice(inputText.value.lastIndexOf(beforeMathOperation) + 1));
+          secondValue = inputText.value.slice(inputText.value.lastIndexOf(beforeMathOperation) + 1);
+
+          const isSecondValueADecimal = secondValue.includes(",")
+          isSecondValueADecimal ? secondValue = secondValue.replace(",", ".")
+                                : secondValue = secondValue;
           
-          if (beforeMathOperation === '+') result = firstValue + secondValue;
-          else if (beforeMathOperation === '-') result = firstValue - secondValue;
-          else if (beforeMathOperation === '*') result = firstValue * secondValue;
-          else if (beforeMathOperation === '/') result = firstValue / secondValue;
+          firstValue = Number(firstValue);
+          secondValue = Number(secondValue);
+
+          if (beforeMathOperation === '+') result = (firstValue + secondValue).toPrecision();
+          else if (beforeMathOperation === '-') result = (firstValue - secondValue).toPrecision();
+          else if (beforeMathOperation === '*') result = (firstValue * secondValue).toPrecision();
+          else if (beforeMathOperation === '/') result = (firstValue / secondValue).toPrecision();
           
           beforeMathOperation = event.target.value;
           
-          inputText.value = `${result}`;
+          inputText.value = result;
           inputText.value += event.target.value;
           firstValue = result;
           secondValue = 0;
@@ -149,6 +161,10 @@ const cancelEntry = event => {
   console.log(beforeMathOperation);
 }
 
+const setDot = () => {
+  inputText.value += ",";
+}
+
 inputText.addEventListener('keypress', disableKeyPress);
 
 btnClear.addEventListener('click', cleanAll);
@@ -158,6 +174,8 @@ equalMathOperation.addEventListener('click', getResult);
 document.addEventListener('keypress', handleClick);
 
 btnCancelEntry.addEventListener('click', cancelEntry)
+
+btnDot.addEventListener('click', setDot);
 
 btnNumbers.forEach((value, key) => {
   btnNumbers[key].addEventListener('click', function() {setValuesToInput(btnNumbers[key])});
