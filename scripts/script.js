@@ -33,11 +33,12 @@ const cleanAll = () => {
  * da calculadores e então insere o valor/operação no input
  */
 const handleClick = event => {
-  const acceptableValues = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '+', '-', '*', '/', '='];
+  console.log(event.key);
+  const acceptableValues = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '+', '-', '*', '/', '=', 'Backspace'];
   for (let i = 0; i < acceptableValues.length; i++) {
     if (event.key === acceptableValues[i]) {
       console.log("OK")
-      document.querySelector(`input[value="${event.key}"]`).click();
+      document.querySelector(`input[data-name="${event.key}"]`).click();
     }
   }
 }
@@ -162,7 +163,7 @@ const setValuesToInput = (btnNumbers) => {
 /**
  * Impede com que o pressionamento da tecla insira o valor no input
  */
-const disableKeyPress = event => {
+const disableKeyDown = event => {
   event.preventDefault();
   return false;
 }
@@ -189,13 +190,13 @@ const setDot = () => {
   }
 }
 
-inputText.addEventListener('keypress', disableKeyPress);
+inputText.addEventListener('keydown', disableKeyDown);
 
 btnClear.addEventListener('click', cleanAll);
 
 equalMathOperation.addEventListener('click', getResult);
 
-document.addEventListener('keypress', handleClick);
+document.addEventListener('keydown', handleClick);
 
 btnCancelEntry.addEventListener('click', cancelEntry)
 
