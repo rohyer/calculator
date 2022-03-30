@@ -4,6 +4,9 @@ let result = null;
 let beforeMathOperation = null;
 let counterPressed = 0
 let lastValue = 0;
+let isFirstFieldFilled = 0;
+let isSecondFieldFilled = 0;
+let commaCounter = 0;
 let inputText = document.querySelector('input[type="text"]');
 const inputButtons = document.querySelectorAll('input[type="button"]');
 const mathOperation = document.querySelectorAll('.math-operation');
@@ -54,10 +57,10 @@ const calculate = (event) => {
       return false;
       
     } else {
+      commaCounter = 0;
+
       if (!counterPressed) {
-        const isFirstValueADecimal = inputText.value.includes(",");
-        isFirstValueADecimal ? firstValue = inputText.value.replace(",", ".")
-                            : firstValue = inputText.value;
+        firstValue = inputText.value;
 
         if (!firstValue && !beforeMathOperation) {
           // firstValue = Number(firstValue);
@@ -83,6 +86,10 @@ const calculate = (event) => {
         } else {
           secondValue = inputText.value.slice(inputText.value.lastIndexOf(beforeMathOperation) + 1);
 
+          const isFirstValueADecimal = firstValue.includes(",");
+          isFirstValueADecimal ? firstValue = firstValue.replace(",", ".")
+                            : firstValue = firstValue;
+
           const isSecondValueADecimal = secondValue.includes(",")
           isSecondValueADecimal ? secondValue = secondValue.replace(",", ".")
                                 : secondValue = secondValue;
@@ -96,10 +103,15 @@ const calculate = (event) => {
           else if (beforeMathOperation === '/') result = (firstValue / secondValue).toPrecision();
           
           beforeMathOperation = event.target.value;
+
+          firstValue = result;
+
+          const hasADotOnResult = result;
+          hasADotOnResult ? result = result.replace(".", ",")
+                          : result = result;
           
           inputText.value = result;
           inputText.value += event.target.value;
-          firstValue = result;
           secondValue = 0;
         }
       }
@@ -111,7 +123,13 @@ const calculate = (event) => {
  * Faz a conta usando os valores das variaveis firstValue, SecondValue e beforeMathOperation
  */
 const getResult = () => {
-  secondValue = Number(inputText.value.slice(inputText.value.lastIndexOf(beforeMathOperation) + 1));
+  secondValue = inputText.value.slice(inputText.value.lastIndexOf(beforeMathOperation) + 1);
+  const isSecondValueADecimal = secondValue.includes(",")
+          isSecondValueADecimal ? secondValue = secondValue.replace(",", ".")
+                                : secondValue = secondValue;
+                      
+  firstValue = Number(firstValue);
+  secondValue = Number(secondValue);
 
   if (firstValue && secondValue && beforeMathOperation) {
     if (beforeMathOperation === '+') result = firstValue + secondValue;
@@ -134,8 +152,10 @@ const getResult = () => {
 const setValuesToInput = (btnNumbers) => {
   if (beforeMathOperation === null) {
     inputText.value += btnNumbers.value;
+    isFirstFieldFilled = 1;
   } else {
     inputText.value += btnNumbers.value;
+    isSecondFieldFilled = 1;
   }
 }
 
@@ -162,7 +182,11 @@ const cancelEntry = event => {
 }
 
 const setDot = () => {
-  inputText.value += ",";
+  if ((!firstValue && isFirstFieldFilled && !commaCounter) ||
+      (firstValue && isSecondFieldFilled && !commaCounter)) {
+        inputText.value += ',';
+        commaCounter++; 
+  }
 }
 
 inputText.addEventListener('keypress', disableKeyPress);
