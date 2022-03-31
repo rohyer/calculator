@@ -34,10 +34,9 @@ const cleanAll = () => {
  */
 const handleClick = event => {
   console.log(event.key);
-  const acceptableValues = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '+', '-', '*', '/', '=', 'Backspace'];
+  const acceptableValues = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '+', '-', '*', '/', '=', 'Backspace', 'Escape'];
   for (let i = 0; i < acceptableValues.length; i++) {
     if (event.key === acceptableValues[i]) {
-      console.log("OK")
       document.querySelector(`input[data-name="${event.key}"]`).click();
     }
   }
