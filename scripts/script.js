@@ -128,10 +128,10 @@ const getResult = () => {
           isSecondValueADecimal ? secondValue = secondValue.replace(",", ".")
                                 : secondValue = secondValue;
                       
-  firstValue = Number(firstValue);
-  secondValue = Number(secondValue);
-
   if (firstValue && secondValue && beforeMathOperation) {
+    firstValue = Number(firstValue);
+    secondValue = Number(secondValue);
+    
     if (beforeMathOperation === '+') result = firstValue + secondValue;
     else if (beforeMathOperation === '-') result = firstValue - secondValue;
     else if (beforeMathOperation === '*') result = firstValue * secondValue;
