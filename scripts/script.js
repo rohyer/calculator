@@ -11,6 +11,7 @@ let inputText = document.querySelector('input[type="text"]');
 const inputButtons = document.querySelectorAll('input[type="button"]');
 const mathOperation = document.querySelectorAll('.math-operation');
 const equalMathOperation = document.querySelector('.equal-math-operation');
+const subtractionMathOperation = document.getElementById('subtraction-math-operation');
 const btnClear = document.querySelector('.btn-clear');
 const btnCancelEntry = document.querySelector('.btn-cancel-entry');
 const btnNumbers = document.querySelectorAll('.btn-numbers');
@@ -33,7 +34,6 @@ const cleanAll = () => {
  * da calculadores e então insere o valor/operação no input
  */
 const handleClick = event => {
-  console.log(event.key);
   const acceptableValues = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '+', '-', '*', '/', '=', 'Backspace', 'Escape'];
   for (let i = 0; i < acceptableValues.length; i++) {
     if (event.key === acceptableValues[i]) {
@@ -61,17 +61,19 @@ const calculate = (event) => {
 
       if (!counterPressed) {
         firstValue = inputText.value;
-
         if (!firstValue && !beforeMathOperation) {
           // firstValue = Number(firstValue);
+          console.log('1');
           beforeMathOperation = event.target.value;
           inputText.value += beforeMathOperation;
           
         } else if (firstValue && beforeMathOperation) {
+          console.log('2');
           beforeMathOperation = event.target.value;
           inputText.value = firstValue + beforeMathOperation;
           
         } else if (firstValue && !beforeMathOperation) {
+          console.log('3');
           // firstValue = Number(firstValue);
           beforeMathOperation = event.target.value;
           inputText.value = firstValue + beforeMathOperation;
@@ -175,10 +177,6 @@ const cancelEntry = event => {
     secondValue = 0;
     inputText.value = firstValue + beforeMathOperation;
   }
-
-  console.log(firstValue);
-  console.log(secondValue);
-  console.log(beforeMathOperation);
 }
 
 const setDot = () => {
@@ -189,6 +187,10 @@ const setDot = () => {
   }
 }
 
+const setNegativeNumber = event => {
+  if (inputText.value === '') inputText.value = ' ';
+}
+
 inputText.addEventListener('keydown', disableKeyDown);
 
 btnClear.addEventListener('click', cleanAll);
@@ -196,6 +198,8 @@ btnClear.addEventListener('click', cleanAll);
 equalMathOperation.addEventListener('click', getResult);
 
 document.addEventListener('keydown', handleClick);
+
+subtractionMathOperation.addEventListener('click', setNegativeNumber);
 
 btnCancelEntry.addEventListener('click', cancelEntry)
 
