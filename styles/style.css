@@ -9,7 +9,8 @@ body {
   background-color: #DDD;
 }
 
-.calculator {
+.box {
+  position: relative;
   width: 275px;
   height: 423px;
   margin-top: 100px;
@@ -93,4 +94,37 @@ input.equal-math-operation {
 
 .calculator__main-row input[type="button"] {
   margin: 3px 3px 0px 3px;
+}
+
+.color-theme {
+  margin-top: 15px;
+}
+
+.color-theme i {
+  font-size: 20px;
+}
+
+.fa-moon {
+  cursor: auto;
+  opacity: 0;
+  margin-left: -20px;
+  transition: all .25s;
+}
+.fa-sun {
+  cursor: auto;
+  opacity: 0;
+  margin-left: -40px;
+  transition: all .25s;
+}
+
+.fa-moon.active {
+  cursor: pointer;
+  opacity: 1;
+  margin-left: 0px;
+}
+
+.fa-sun.active {
+  cursor: pointer;
+  opacity: 1;
+  margin-left: 0px;
 }
