@@ -16,6 +16,8 @@ const btnClear = document.querySelector('.btn-clear');
 const btnCancelEntry = document.querySelector('.btn-cancel-entry');
 const btnNumbers = document.querySelectorAll('.btn-numbers');
 const btnDot = document.querySelector('.btn-dot');
+const darkThemeBtn = document.getElementById('dark-theme');
+const lightThemeBtn = document.getElementById('light-theme');
 
 /**
  * Limpa inputs e variáveis
@@ -191,6 +193,26 @@ const setNegativeNumber = event => {
   if (inputText.value === '') inputText.value = ' ';
 }
 
+const changeTheme = () => {
+  const body = document.querySelector('body');
+
+  if (darkThemeBtn.className.includes('active')) {
+    darkThemeBtn.classList.remove('active');
+    lightThemeBtn.classList.add('active');
+
+    if (!body.className.includes('dark-theme')) {
+      body.classList.add('dark-theme');
+    }
+  } else if (lightThemeBtn.className.includes('active')) {
+    lightThemeBtn.classList.remove('active');
+    darkThemeBtn.classList.add('active');
+
+    if (body.className.includes('dark-theme')) {
+      body.classList.remove('dark-theme');
+    }
+  }
+}
+
 inputText.addEventListener('keydown', disableKeyDown);
 
 btnClear.addEventListener('click', cleanAll);
@@ -212,5 +234,8 @@ btnNumbers.forEach((value, key) => {
 mathOperation.forEach((value, key) => {
   mathOperation[key].addEventListener('click', calculate);
 });
+
+darkThemeBtn.addEventListener('click', changeTheme);
+lightThemeBtn.addEventListener('click', changeTheme);
 
 // document.addEventListener('keypress', calculate);

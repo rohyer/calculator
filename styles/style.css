@@ -6,7 +6,15 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
+}
+
+body:not(.dark-theme) {
   background-color: #DDD;
+}
+
+body.dark-theme {
+  background-color: #333;
+
 }
 
 .box {
@@ -111,6 +119,7 @@ input.equal-math-operation {
   transition: all .25s;
 }
 .fa-sun {
+  color: #DDDDDD;
   cursor: auto;
   opacity: 0;
   margin-left: -40px;
