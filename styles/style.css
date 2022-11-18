@@ -105,6 +105,8 @@ input.equal-math-operation {
 }
 
 .color-theme {
+  display: flex;
+  justify-content: center;
   margin-top: 15px;
 }
 
@@ -113,12 +115,14 @@ input.equal-math-operation {
 }
 
 .fa-moon {
+  position: absolute;
   cursor: auto;
   opacity: 0;
   margin-left: -20px;
   transition: all .25s;
 }
 .fa-sun {
+  position: absolute;
   color: #DDDDDD;
   cursor: auto;
   opacity: 0;
