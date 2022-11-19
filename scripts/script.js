@@ -32,8 +32,8 @@ const cleanAll = () => {
 }
 
 /**
- * Quando a tecla é pressionada a função verifica se a tecla pressionada faz parte
- * da calculadores e então insere o valor/operação no input
+ * The pressed key is checked if it is part of the calculator and then inserts the value or
+ * operation in the input
  */
 const handleClick = event => {
   const acceptableValues = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '+', '-', '*', '/', '=', 'Backspace', 'Escape'];
@@ -45,7 +45,7 @@ const handleClick = event => {
 }
 
 /**
- * Faz o calculo de acordo com o que as variáveis recebem de valor
+ * This function does the math using the variables with their respctive values
  */
 const calculate = (event) => {
   lastValue = inputText.value[inputText.value.length - 1];
@@ -64,7 +64,6 @@ const calculate = (event) => {
       if (!counterPressed) {
         firstValue = inputText.value;
         if (!firstValue && !beforeMathOperation) {
-          // firstValue = Number(firstValue);
           console.log('1');
           beforeMathOperation = event.target.value;
           inputText.value += beforeMathOperation;
@@ -76,7 +75,6 @@ const calculate = (event) => {
           
         } else if (firstValue && !beforeMathOperation) {
           console.log('3');
-          // firstValue = Number(firstValue);
           beforeMathOperation = event.target.value;
           inputText.value = firstValue + beforeMathOperation;
         }
@@ -124,7 +122,7 @@ const calculate = (event) => {
 }
 
 /**
- * Faz a conta usando os valores das variaveis firstValue, SecondValue e beforeMathOperation
+ * Function does the math using firstValue, secondValue and beforeMathOperation variables
  */
 const getResult = () => {
   secondValue = inputText.value.slice(inputText.value.lastIndexOf(beforeMathOperation) + 1);
@@ -150,8 +148,9 @@ const getResult = () => {
 }
 
 /**
- * Recebe o clique do primeiro e segundo valor da conta
- * Após o primeiro ser recebido só será recebindo o segundo valor porque o primeiro valor será ocupado pelo resultado
+ * Gets the click of the first and second value of the calculation
+ * After the first one is received, only the second value will be received because 
+ * the first value will be occupied by the result
  */
 const setValuesToInput = (btnNumbers) => {
   if (beforeMathOperation === null) {
